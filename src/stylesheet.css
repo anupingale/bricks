@@ -1,14 +1,12 @@
-.screen {
+.viewport {
   height:600px;
   width:960px;
   border: solid black 1px;
   margin: 0 auto;
+  position: relative;
 }
 
-.paddle_style {
-  width:100px;
-  height:8px;
-  position:absolute;
-  top:590px;
+.paddle {
+  position: absolute;
   background-color: black
 }
