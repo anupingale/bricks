@@ -1,0 +1,5 @@
+* create html file with simple head and body tags.
+* write function to create the viewport
+* apply css for the viewport
+* write basic function for creating the paddle.
+* add css to the paddle
