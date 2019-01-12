@@ -63,35 +63,35 @@ const movePaddle = function(document, paddle) {
 	drawPaddle(document, paddle);
 };
 
-const bricks = function(height, width, bottom, left) {
-	let bottom_ball = bottom;
+const bricks = function(height, width, bottom_brick, left_brick) {
+	let bottom = bottom_brick;
 	for (let numberOfLayers = 0; numberOfLayers < 5; numberOfLayers++) {
-		let left_ball = left;
-		for (let index = 1; index < 11; index++) {
-			let brick = new Brick(height, width, bottom_ball, left_ball, true);
-			left_ball = left_ball + 90;
+		let left = left_brick;
+		for (let index = 0; index < 10; index++) {
+			let brick = new Brick(height, width, bottom, left, true);
+			left = left + 90;
 			initializeBrick(document, brick);
 		}
-		bottom_ball = bottom_ball - 40;
+		bottom = bottom - 40;
 	}
 };
 
 const moveBall = function(screen, ball, paddle) {
 	console.log(ball, paddle);
-	ball.move(screen);
+	ball.move(screen, paddle);
 	drawBall(document, ball);
 };
 
 const initializeGame = function() {
 	let screen = new Screen(600, 905);
-	let ball = new Ball(15, 10, 500, 30, 30);
-	let paddle = new Paddle(8, 100, 500, 5, 5);
+	let ball = new Ball(15, 10, 200, 20, 50);
+	let paddle = new Paddle(8, 100, 200, 5, 20);
 	let newScreen = initializeScreen(document, screen);
 	initializePaddle(document, paddle);
 	initializeBall(document, ball);
 	bricks(30, 80, 560, 8);
 	let move = moveBall.bind(null, screen, ball, paddle);
-	setInterval(move, 500);
+	setInterval(move, 100);
 	newScreen.focus();
 	newScreen.onkeydown = movePaddle.bind(null, document, paddle);
 };

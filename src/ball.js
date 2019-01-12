@@ -7,11 +7,11 @@ class Ball {
 		this.dy = dy;
 	}
 
-	move(screen) {
+	move(screen, padddle) {
 		if (this.left > screen.width - this.radius * 2) {
 			this.dx = -this.dx;
 		}
-		if (this.bottom < 0) {
+		if (this.bottom < padddle.bottom) {
 			this.dy = -this.dy;
 		}
 		if (this.bottom > screen.height - this.radius * 2) {
