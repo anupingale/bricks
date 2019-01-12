@@ -1,6 +1,6 @@
 .viewport {
   height:600px;
-  width:960px;
+  width:905px;
   border: solid black 1px;
   margin: 0 auto;
   position: relative;
@@ -15,4 +15,9 @@
   border-radius: 100%;
   position: absolute;
   background-color:red
+}
+
+.brick {
+  position: absolute;
+  background-color: black
 }

@@ -7,11 +7,18 @@ const drawPaddle = function(document, paddle) {
 };
 
 const drawBall = function(document, ball) {
-	let slider = document.getElementById("ball_1");
-	slider.style.height = ball.height;
-	slider.style.width = ball.width;
-	slider.style.bottom = ball.bottom;
-	slider.style.left = ball.left;
+	let ball_1 = document.getElementById("ball_1");
+	ball_1.style.height = ball.height;
+	ball_1.style.width = ball.width;
+	ball_1.style.bottom = ball.bottom;
+	ball_1.style.left = ball.left;
+};
+
+const drawBrick = function(brickDiv, brick) {
+	brickDiv.style.height = brick.height;
+	brickDiv.style.width = brick.width;
+	brickDiv.style.bottom = brick.bottom;
+	brickDiv.style.left = brick.left;
 };
 
 const initializePaddle = function(document, paddle) {
@@ -32,10 +39,31 @@ const initializeBall = function(document, ball) {
 	drawBall(document, ball);
 };
 
+const initializeBrick = function(document, brick) {
+	let screen = document.getElementById("screen");
+	let brickDiv = document.createElement("div");
+	brickDiv.className = "brick";
+	screen.appendChild(brickDiv);
+	drawBrick(brickDiv, brick);
+};
+
 const movePaddle = function(document, paddle) {
 	if (event.key == "ArrowRight") paddle.moveRight();
 	if (event.key == "ArrowLeft") paddle.moveLeft();
 	drawPaddle(document, paddle);
+};
+
+const bricks = function(height, width, bottom, left) {
+	let bottom_ball = bottom;
+	for (let numberOfLayers = 1; numberOfLayers < 6; numberOfLayers++) {
+		let left_ball = left;
+		for (let index = 1; index < 11; index++) {
+			let brick = new Brick(height, width, bottom_ball, left_ball);
+			left_ball = left_ball + 90;
+			initializeBrick(document, brick);
+		}
+		bottom_ball = bottom_ball - 40;
+	}
 };
 
 const initializeGame = function() {
@@ -44,6 +72,7 @@ const initializeGame = function() {
 	let paddle = new Paddle(8, 100, 40, 5, 5);
 	initializePaddle(document, paddle);
 	initializeBall(document, ball);
+	bricks(30, 80, 560, 8);
 	screen.focus();
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
 };

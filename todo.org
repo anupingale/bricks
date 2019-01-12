@@ -1,4 +1,2 @@
-* write function to create the viewport
-* create entity ball
-* add css to ball
-* make ball move 
+* make ball move
+* if it touches the paddle it should move in certain direction.
