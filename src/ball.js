@@ -6,4 +6,8 @@ class Ball {
 		this.left = left;
 		this.speed = speed;
 	}
+	move() {
+		this.left = this.left + 10;
+		this.bottom = this.bottom + 10;
+	}
 }

@@ -58,12 +58,17 @@ const bricks = function(height, width, bottom, left) {
 	for (let numberOfLayers = 1; numberOfLayers < 6; numberOfLayers++) {
 		let left_ball = left;
 		for (let index = 1; index < 11; index++) {
-			let brick = new Brick(height, width, bottom_ball, left_ball);
+			let brick = new Brick(height, width, bottom_ball, left_ball, true);
 			left_ball = left_ball + 90;
 			initializeBrick(document, brick);
 		}
 		bottom_ball = bottom_ball - 40;
 	}
+};
+
+const moveBall = function(ball) {
+	ball.move();
+	drawBall(document, ball);
 };
 
 const initializeGame = function() {
@@ -73,6 +78,8 @@ const initializeGame = function() {
 	initializePaddle(document, paddle);
 	initializeBall(document, ball);
 	bricks(30, 80, 560, 8);
+	let move = moveBall.bind(null, ball);
+	setInterval(move, 1000);
 	screen.focus();
 	screen.onkeydown = movePaddle.bind(null, document, paddle);
 };
