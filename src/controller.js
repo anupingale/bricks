@@ -21,7 +21,7 @@ const movePaddle = function(document, paddle) {
 	drawPaddle(document, paddle);
 };
 
-const initialize = function() {
+const initializeGame = function() {
 	let screen = document.getElementById("screen");
 	let paddle = new Paddle(8, 100, 40, 5, 5);
 	initializePaddle(document, paddle);
