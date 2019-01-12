@@ -1,4 +1,4 @@
 * write function to create the viewport
-* create entity b all
+* create entity ball
 * add css to ball
 * make ball move 
