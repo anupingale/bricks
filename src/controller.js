@@ -8,8 +8,8 @@ const drawPaddle = function(document, paddle) {
 
 const drawBall = function(document, ball) {
 	let ball_1 = document.getElementById("ball_1");
-	ball_1.style.height = ball.height;
-	ball_1.style.width = ball.width;
+	ball_1.style.height = ball.radius * 2;
+	ball_1.style.width = ball.radius * 2;
 	ball_1.style.bottom = ball.bottom;
 	ball_1.style.left = ball.left;
 };
@@ -65,7 +65,7 @@ const movePaddle = function(document, paddle) {
 
 const bricks = function(height, width, bottom, left) {
 	let bottom_ball = bottom;
-	for (let numberOfLayers = 1; numberOfLayers < 6; numberOfLayers++) {
+	for (let numberOfLayers = 0; numberOfLayers < 5; numberOfLayers++) {
 		let left_ball = left;
 		for (let index = 1; index < 11; index++) {
 			let brick = new Brick(height, width, bottom_ball, left_ball, true);
@@ -84,7 +84,7 @@ const moveBall = function(screen, ball, paddle) {
 
 const initializeGame = function() {
 	let screen = new Screen(600, 905);
-	let ball = new Ball(30, 30, 10, 500, 30);
+	let ball = new Ball(15, 10, 500, 30, 30);
 	let paddle = new Paddle(8, 100, 500, 5, 5);
 	let newScreen = initializeScreen(document, screen);
 	initializePaddle(document, paddle);

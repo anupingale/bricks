@@ -1,20 +1,26 @@
 class Ball {
-	constructor(height, width, bottom, left, speed) {
-		this.height = height;
-		this.width = width;
+	constructor(radius, bottom, left, dx, dy) {
+		this.radius = radius;
 		this.bottom = bottom;
 		this.left = left;
-		this.speed = speed;
+		this.dx = dx;
+		this.dy = dy;
 	}
 
 	move(screen) {
-		if (this.left > screen.width - this.width) {
-			this.speed = -this.speed;
+		if (this.left > screen.width - this.radius * 2) {
+			this.dx = -this.dx;
 		}
 		if (this.bottom < 0) {
-			this.speed = -this.speed;
+			this.dy = -this.dy;
 		}
-		this.left = this.left + this.speed;
-		this.bottom = this.bottom + this.speed;
+		if (this.bottom > screen.height - this.radius * 2) {
+			this.dy = -this.dy;
+		}
+		if (this.left < 0) {
+			this.dx = -this.dx;
+		}
+		this.left = this.left + this.dx;
+		this.bottom = this.bottom + this.dy;
 	}
 }
