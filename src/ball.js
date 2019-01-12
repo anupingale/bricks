@@ -6,8 +6,15 @@ class Ball {
 		this.left = left;
 		this.speed = speed;
 	}
-	move() {
-		this.left = this.left + 10;
-		this.bottom = this.bottom + 10;
+
+	move(screen) {
+		if (this.left > screen.width - this.width) {
+			this.speed = -this.speed;
+		}
+		if (this.bottom < 0) {
+			this.speed = -this.speed;
+		}
+		this.left = this.left + this.speed;
+		this.bottom = this.bottom + this.speed;
 	}
 }
