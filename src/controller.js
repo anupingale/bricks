@@ -77,15 +77,14 @@ const bricks = function(height, width, bottom_brick, left_brick) {
 };
 
 const moveBall = function(screen, ball, paddle) {
-	console.log(ball, paddle);
 	ball.move(screen, paddle);
 	drawBall(document, ball);
 };
 
 const initializeGame = function() {
 	let screen = new Screen(600, 905);
-	let ball = new Ball(15, 10, 200, 20, 50);
-	let paddle = new Paddle(8, 100, 200, 5, 20);
+	let ball = new Ball(15, 10, 200, 10, 10);
+	let paddle = new Paddle(8, 100, 200, 10, 20);
 	let newScreen = initializeScreen(document, screen);
 	initializePaddle(document, paddle);
 	initializeBall(document, ball);

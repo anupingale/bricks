@@ -7,18 +7,25 @@ class Ball {
 		this.positionY = positionY;
 	}
 
-	move(screen, padddle) {
-		if (this.left + 15 + this.radius * 2 > screen.width) {
+	move(screen, paddle) {
+		if (this.left > screen.width) {
 			this.positionX = -this.positionX;
 		}
-		if (this.bottom < padddle.bottom) {
-			this.positionY = -this.positionY;
-		}
-		if (this.bottom + this.radius * 2 > screen.height) {
-			this.positionY = -this.positionY;
-		}
-		if (this.left - this.radius < 0) {
+		if (this.left < 0) {
 			this.positionX = -this.positionX;
+		}
+		if (this.bottom > screen.height) {
+			this.positionY = -this.positionY;
+		}
+		if (
+			this.bottom <= paddle.bottom + paddle.height &&
+			this.left < paddle.left + paddle.width &&
+			this.left > paddle.left
+		) {
+			this.positionY = -this.positionY;
+		}
+		if (this.bottom < 0) {
+			return 0;
 		}
 		this.left = this.left + this.positionX;
 		this.bottom = this.bottom + this.positionY;
