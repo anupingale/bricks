@@ -17,7 +17,8 @@
 
 .brick {
   position: absolute;
-  background-color: crimson
+  background-color: crimson;
+  border: solid black 2px
 }
 
 .score {

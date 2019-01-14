@@ -147,7 +147,7 @@ const displayScore = function() {
 
 const win = function() {
 	if (score == HIGHSCORE) {
-		document.write(`Congratulations.............!!! you won the game`);
+		document.write(`<h1>Congratulations.............!!! you won the game</h1>`);
 	}
 };
 
