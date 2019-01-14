@@ -123,10 +123,41 @@ const displayScore = function() {
 	scoreBoard.innerHTML = `<h2>Score : ${score}</h2>`;
 };
 
+const gameOver = function() {
+	document.write(`Your Score is ${score}\nPlease refresh page to play again`);
+};
+
+const changePositions = function(screen, paddle, ball) {
+	let changes = { positionX: false, positionY: false };
+	if (ball.left > screen.width) {
+		changes.positionX = true;
+	}
+	if (ball.left < 0) {
+		changes.positionX = true;
+	}
+	if (ball.bottom >= screen.height) {
+		changes.positionY = true;
+	}
+	if (
+		ball.bottom <= paddle.bottom + paddle.height &&
+		ball.left < paddle.left + paddle.width &&
+		ball.left > paddle.left
+	) {
+		changes.positionY = true;
+	}
+	if (ball.bottom < 0) {
+		gameOver();
+		return 0;
+	}
+	return changes;
+};
+
 const moveBall = function(screen, ball, paddle) {
 	detectCollision(document, ball, screen);
 	displayScore();
-	ball.move(screen, paddle);
+	let changes = changePositions(screen, paddle, ball);
+	ball.applyChanges(changes);
+	ball.move();
 	drawBall(document, ball);
 };
 
