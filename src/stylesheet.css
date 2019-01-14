@@ -1,5 +1,5 @@
 .screen {
-  border: solid black 1px;
+  border: solid black 5px;
   margin: 0 auto;
   position: relative;
 }
@@ -12,12 +12,12 @@
 .ball {
   border-radius: 100%;
   position: absolute;
-  background-color:red
+  background-color:black
 }
 
 .brick {
   position: absolute;
-  background-color: black
+  background-color: crimson
 }
 
 .score {
