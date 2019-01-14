@@ -21,3 +21,12 @@
   position: absolute;
   background-color: black
 }
+
+.score {
+  height:40px;
+  width: 200px;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  text-align: center
+}

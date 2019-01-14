@@ -102,13 +102,13 @@ const getBrickPosition = function(document) {
 };
 let score = 0;
 
-const detectCollision = function(document, ball) {
+const detectCollision = function(document, ball, screen) {
 	let brickPositions = getBrickPosition(document);
 	for (let i = 0; i < brickPositions.length; i++) {
 		if (
 			ball.left >= brickPositions[i].left &&
 			ball.left <= brickPositions[i].left + brickPositions[i].width &&
-			ball.bottom == 600 - brickPositions[i].top
+			ball.bottom == screen.height - brickPositions[i].top
 		) {
 			const brickDiv = document.getElementById(brickPositions[i].id);
 			brickDiv.parentNode.removeChild(brickDiv);
@@ -116,13 +116,14 @@ const detectCollision = function(document, ball) {
 		}
 	}
 };
+
 const displayScore = function() {
 	let scoreBoard = document.getElementById("score_board");
-	scoreBoard.innerHTML = `<h2>${score}</h2>`;
+	scoreBoard.innerHTML = `<h2>Score : ${score}</h2>`;
 };
 
 const moveBall = function(screen, ball, paddle) {
-	detectCollision(document, ball);
+	detectCollision(document, ball, screen);
 	displayScore();
 	ball.move(screen, paddle);
 	drawBall(document, ball);
