@@ -1,2 +1,2 @@
-* make ball move
-* if it touches the paddle it should move in certain direction.
+* ball is still slightly going outside.(avoid it)
+* make brick and ball collision more generic.
