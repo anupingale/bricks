@@ -1,6 +1,8 @@
 const getPaddle = document => document.getElementById("paddle_1");
 const getBall = document => document.getElementById("ball_1");
 const getScreen = document => document.getElementById("screen_1");
+const getBrickClass = document => document.getElementsByClassName("brick");
+const HIGHSCORE = 700;
 
 const drawPaddle = function(document, paddle) {
 	let slider = getPaddle(document);
@@ -104,7 +106,7 @@ const getPositions = function(brick) {
 };
 
 const getBrickPosition = function(document) {
-	let bricks = document.getElementsByClassName("brick");
+	let bricks = getBrickClass(document);
 	let positions = [];
 	for (let index = 0; index < bricks.length; index++) {
 		positions.push(getPositions(bricks[index]));
@@ -133,6 +135,12 @@ const detectCollision = function(document, ball, screen) {
 const displayScore = function() {
 	let scoreBoard = document.getElementById("score_board");
 	scoreBoard.innerHTML = `<h2>Score : ${score}</h2>`;
+};
+
+const win = function() {
+	if (score == HIGHSCORE) {
+		document.write(`Congratulations.............!!! you won the game`);
+	}
 };
 
 const gameOver = function() {
@@ -167,6 +175,7 @@ const changePositions = function(screen, paddle, ball) {
 const moveBall = function(screen, ball, paddle) {
 	detectCollision(document, ball, screen);
 	displayScore();
+	win();
 	let changes = changePositions(screen, paddle, ball);
 	ball.applyChanges(changes);
 	ball.move();
