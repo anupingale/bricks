@@ -49,10 +49,11 @@ const initializeBall = function(document, ball) {
 	drawBall(document, ball);
 };
 
-const initializeBrick = function(document, brick) {
+const initializeBrick = function(document, brick, id) {
 	let screen = document.getElementById("screen_1");
 	let brickDiv = document.createElement("div");
 	brickDiv.className = "brick";
+	brickDiv.id = id;
 	screen.appendChild(brickDiv);
 	drawBrick(brickDiv, brick);
 };
@@ -63,6 +64,10 @@ const movePaddle = function(document, paddle) {
 	drawPaddle(document, paddle);
 };
 
+const convertPositionToId = (positionX, positionY) => {
+	return `${positionX}${positionY}`;
+};
+
 const bricks = function(height, width, bottom_brick, left_brick) {
 	let bottom = bottom_brick;
 	for (let numberOfLayers = 0; numberOfLayers < 5; numberOfLayers++) {
@@ -70,13 +75,55 @@ const bricks = function(height, width, bottom_brick, left_brick) {
 		for (let index = 0; index < 10; index++) {
 			let brick = new Brick(height, width, bottom, left, true);
 			left = left + 90;
-			initializeBrick(document, brick);
+			let id = convertPositionToId(numberOfLayers, index);
+			initializeBrick(document, brick, id);
 		}
 		bottom = bottom - 40;
 	}
 };
 
+const getPositions = function(brick) {
+	return {
+		id: brick.id,
+		top: brick.offsetTop,
+		left: brick.offsetLeft,
+		height: brick.offsetHeight,
+		width: brick.offsetWidth
+	};
+};
+
+const getBrickPosition = function(document) {
+	let bricks = document.getElementsByClassName("brick");
+	let positions = [];
+	for (let i = 0; i < bricks.length; i++) {
+		positions.push(getPositions(bricks[i]));
+	}
+	return positions;
+};
+let score = 0;
+
+const detectCollision = function(document, ball) {
+	let brickPositions = getBrickPosition(document);
+	for (let i = 0; i < brickPositions.length; i++) {
+		if (
+			ball.left >= brickPositions[i].left &&
+			ball.left <= brickPositions[i].left + brickPositions[i].width &&
+			ball.bottom == 600 - brickPositions[i].top
+		) {
+			const brickDiv = document.getElementById(brickPositions[i].id);
+			brickDiv.parentNode.removeChild(brickDiv);
+			score = score + 10;
+		}
+	}
+};
+const displayScore = function() {
+	let scoreBoard = document.getElementById("score_board");
+	scoreBoard.innerHTML = `<h2>${score}</h2>`;
+};
+
 const moveBall = function(screen, ball, paddle) {
+	detectCollision(document, ball);
+	displayScore();
 	ball.move(screen, paddle);
 	drawBall(document, ball);
 };
