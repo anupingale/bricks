@@ -1,5 +1,9 @@
+const getPaddle = document => document.getElementById("paddle_1");
+const getBall = document => document.getElementById("ball_1");
+const getScreen = document => document.getElementById("screen_1");
+
 const drawPaddle = function(document, paddle) {
-	let slider = document.getElementById("paddle_1");
+	let slider = getPaddle(document);
 	slider.style.height = paddle.height;
 	slider.style.width = paddle.width;
 	slider.style.bottom = paddle.bottom;
@@ -7,7 +11,7 @@ const drawPaddle = function(document, paddle) {
 };
 
 const drawBall = function(document, ball) {
-	let ball_1 = document.getElementById("ball_1");
+	let ball_1 = getBall(document);
 	ball_1.style.height = ball.radius * 2;
 	ball_1.style.width = ball.radius * 2;
 	ball_1.style.bottom = ball.bottom;
@@ -21,6 +25,12 @@ const drawBrick = function(brickDiv, brick) {
 	brickDiv.style.left = brick.left;
 };
 
+const drawScreen = function(document, screen) {
+	let screen_1 = getScreen(document);
+	screen_1.style.height = screen.height;
+	screen_1.style.width = screen.width;
+};
+
 const initializeScreen = function(document, screen) {
 	let body = document.getElementsByTagName("body")[0];
 	let mainDiv = document.createElement("div");
@@ -28,11 +38,12 @@ const initializeScreen = function(document, screen) {
 	mainDiv.className = "screen";
 	mainDiv.tabIndex = "0";
 	body.appendChild(mainDiv);
+	drawScreen(document, screen);
 	return mainDiv;
 };
 
 const initializePaddle = function(document, paddle) {
-	let screen = document.getElementById("screen_1");
+	let screen = getScreen(document);
 	let paddleDiv = document.createElement("div");
 	paddleDiv.id = "paddle_1";
 	paddleDiv.className = "paddle";
@@ -41,7 +52,7 @@ const initializePaddle = function(document, paddle) {
 };
 
 const initializeBall = function(document, ball) {
-	let screen = document.getElementById("screen_1");
+	let screen = getScreen(document);
 	let ballDiv = document.createElement("div");
 	ballDiv.id = "ball_1";
 	ballDiv.className = "ball";
@@ -50,7 +61,7 @@ const initializeBall = function(document, ball) {
 };
 
 const initializeBrick = function(document, brick, id) {
-	let screen = document.getElementById("screen_1");
+	let screen = getScreen(document);
 	let brickDiv = document.createElement("div");
 	brickDiv.className = "brick";
 	brickDiv.id = id;
@@ -70,7 +81,7 @@ const convertPositionToId = (positionX, positionY) => {
 
 const bricks = function(height, width, bottom_brick, left_brick) {
 	let bottom = bottom_brick;
-	for (let numberOfLayers = 0; numberOfLayers < 5; numberOfLayers++) {
+	for (let numberOfLayers = 0; numberOfLayers < 7; numberOfLayers++) {
 		let left = left_brick;
 		for (let index = 0; index < 10; index++) {
 			let brick = new Brick(height, width, bottom, left, true);
@@ -107,7 +118,7 @@ const detectCollision = function(document, ball, screen) {
 	let brickPositions = getBrickPosition(document);
 	for (let index = 0; index < brickPositions.length; index++) {
 		if (
-			ball.left >= brickPositions[index].left &&
+			ball.left + ball.radius * 2 >= brickPositions[index].left &&
 			ball.left <= brickPositions[index].left + brickPositions[index].width &&
 			ball.bottom ==
 				screen.height - brickPositions[index].top - brickPositions[index].height
@@ -142,7 +153,7 @@ const changePositions = function(screen, paddle, ball) {
 	}
 	if (
 		ball.bottom <= paddle.bottom + paddle.height &&
-		ball.left < paddle.left + paddle.width &&
+		ball.left < paddle.left + paddle.width + 8 &&
 		ball.left > paddle.left
 	) {
 		changes.positionY = true;
@@ -163,15 +174,15 @@ const moveBall = function(screen, ball, paddle) {
 };
 
 const initializeGame = function() {
-	let screen = new Screen(600, 905);
-	let ball = new Ball(15, 10, 200, 8, 10);
-	let paddle = new Paddle(8, 100, 200, 10, 20);
+	let screen = new Wall(600, 900);
+	let ball = new Ball(15, 20, 200, 5, 10);
+	let paddle = new Paddle(15, 100, 200, 10, 20);
 	let newScreen = initializeScreen(document, screen);
 	initializePaddle(document, paddle);
 	initializeBall(document, ball);
-	bricks(30, 80, 560, 8);
+	bricks(35, 80, 560, 8);
 	let move = moveBall.bind(null, screen, ball, paddle);
-	setInterval(move, 100);
+	setInterval(move, 50);
 	newScreen.focus();
 	newScreen.onkeydown = movePaddle.bind(null, document, paddle);
 };
