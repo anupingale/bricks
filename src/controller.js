@@ -100,6 +100,7 @@ const getBrickPosition = function(document) {
 	}
 	return positions;
 };
+
 let score = 0;
 
 const detectCollision = function(document, ball, screen) {
