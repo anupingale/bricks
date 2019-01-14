@@ -195,3 +195,5 @@ const initializeGame = function() {
 	newScreen.focus();
 	newScreen.onkeydown = movePaddle.bind(null, document, paddle);
 };
+
+window.onload = initializeGame;
