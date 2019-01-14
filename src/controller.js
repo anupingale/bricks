@@ -95,8 +95,8 @@ const getPositions = function(brick) {
 const getBrickPosition = function(document) {
 	let bricks = document.getElementsByClassName("brick");
 	let positions = [];
-	for (let i = 0; i < bricks.length; i++) {
-		positions.push(getPositions(bricks[i]));
+	for (let index = 0; index < bricks.length; index++) {
+		positions.push(getPositions(bricks[index]));
 	}
 	return positions;
 };
@@ -105,13 +105,14 @@ let score = 0;
 
 const detectCollision = function(document, ball, screen) {
 	let brickPositions = getBrickPosition(document);
-	for (let i = 0; i < brickPositions.length; i++) {
+	for (let index = 0; index < brickPositions.length; index++) {
 		if (
-			ball.left >= brickPositions[i].left &&
-			ball.left <= brickPositions[i].left + brickPositions[i].width &&
-			ball.bottom == screen.height - brickPositions[i].top
+			ball.left >= brickPositions[index].left &&
+			ball.left <= brickPositions[index].left + brickPositions[index].width &&
+			ball.bottom ==
+				screen.height - brickPositions[index].top - brickPositions[index].height
 		) {
-			const brickDiv = document.getElementById(brickPositions[i].id);
+			const brickDiv = document.getElementById(brickPositions[index].id);
 			brickDiv.parentNode.removeChild(brickDiv);
 			score = score + 10;
 		}
@@ -128,14 +129,15 @@ const gameOver = function() {
 };
 
 const changePositions = function(screen, paddle, ball) {
+	let diameter = ball.radius * 2;
 	let changes = { positionX: false, positionY: false };
-	if (ball.left > screen.width) {
+	if (ball.left + diameter > screen.width) {
 		changes.positionX = true;
 	}
 	if (ball.left < 0) {
 		changes.positionX = true;
 	}
-	if (ball.bottom >= screen.height) {
+	if (ball.bottom + diameter >= screen.height) {
 		changes.positionY = true;
 	}
 	if (
@@ -147,7 +149,6 @@ const changePositions = function(screen, paddle, ball) {
 	}
 	if (ball.bottom < 0) {
 		gameOver();
-		return 0;
 	}
 	return changes;
 };
@@ -163,7 +164,7 @@ const moveBall = function(screen, ball, paddle) {
 
 const initializeGame = function() {
 	let screen = new Screen(600, 905);
-	let ball = new Ball(15, 10, 200, 10, 10);
+	let ball = new Ball(15, 10, 200, 8, 10);
 	let paddle = new Paddle(8, 100, 200, 10, 20);
 	let newScreen = initializeScreen(document, screen);
 	initializePaddle(document, paddle);
