@@ -71,7 +71,15 @@ const initializeBrick = function(document, brick, id) {
 	drawBrick(brickDiv, brick);
 };
 
- const movePaddle = function(document, paddle) {
+const movePaddle = function(document, paddle, screen) {
+	if (paddle.left - 10 < 0) {
+		paddle.moveRight();
+	}
+	if (paddle.left > screen.width - (paddle.width + 10)) {
+		console.log(screen.width);
+
+		paddle.moveLeft();
+	}
 	if (event.key == "ArrowRight") paddle.moveRight();
 	if (event.key == "ArrowLeft") paddle.moveLeft();
 	drawPaddle(document, paddle);
@@ -193,7 +201,7 @@ const initializeGame = function() {
 	let move = moveBall.bind(null, screen, ball, paddle);
 	setInterval(move, 50);
 	newScreen.focus();
-	newScreen.onkeydown = movePaddle.bind(null, document, paddle);
+	newScreen.onkeydown = movePaddle.bind(null, document, paddle, screen);
 };
 
 window.onload = initializeGame;
