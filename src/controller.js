@@ -71,7 +71,7 @@ const initializeBrick = function(document, brick, id) {
 	drawBrick(brickDiv, brick);
 };
 
-const movePaddle = function(document, paddle) {
+ const movePaddle = function(document, paddle) {
 	if (event.key == "ArrowRight") paddle.moveRight();
 	if (event.key == "ArrowLeft") paddle.moveLeft();
 	drawPaddle(document, paddle);
