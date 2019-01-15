@@ -191,17 +191,20 @@ const moveBall = function(screen, ball, paddle) {
 };
 
 const initializeGame = function() {
-	let screen = new Wall(600, 900);
-	let ball = new Ball(15, 20, 200, 5, 10);
-	let paddle = new Paddle(15, 100, 200, 10, 20);
-	let newScreen = initializeScreen(document, screen);
-	initializePaddle(document, paddle);
-	initializeBall(document, ball);
+	let game = new Game();
+	let newScreen = initializeScreen(document, game.screen);
+	initializePaddle(document, game.paddle);
+	initializeBall(document, game.ball);
 	bricks(35, 80, 560, 8);
-	let move = moveBall.bind(null, screen, ball, paddle);
+	let move = moveBall.bind(null, game.screen, game.ball, game.paddle);
 	setInterval(move, 50);
 	newScreen.focus();
-	newScreen.onkeydown = movePaddle.bind(null, document, paddle, screen);
+	newScreen.onkeydown = movePaddle.bind(
+		null,
+		document,
+		game.paddle,
+		game.screen
+	);
 };
 
 window.onload = initializeGame;
